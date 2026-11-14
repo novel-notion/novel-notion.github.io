@@ -76,21 +76,17 @@ Another big take away for me is that in this line of work, it pays to connect th
  <ol class="ieee-references">
     <!-- Journal Article Example -->
     <li id="ref-1">
-        C. Herrmann, "Direct LRPT weather satellite image received from Meteor-M N2, Tropical Storm Alberto" Unpublished raw data, received via RTL-SDR, Corning NY, USA, May 29, 2018.
+        C. Herrmann, Direct Downlink Image, "LRPT weather satellite image received from Meteor-M N2, Tropical Storm Alberto", received via RTL-SDR, Corning NY,  May 29, 2018.
     </li>
     
     <li id="ref-2">
-        S. W. Ellingson, "Single-stub matching," in Electromagnetics, Vol. 1, Blacksburg, VA, USA: VT Publishing, 2018, ch. 3, sec. 3.23. [Online]. Available: https://www.circuitbread.com/textbooks/electromagnetics-i/transmission-lines/single-stub-matching (accessed Nov. 13, 2026).
+        S. W. Ellingson, <cite>Single-stub matching in Electromagnetics,</cite> Vol. 1.<br> Blacksburg, VA: VT Publishing, 2018, ch. 3, sec. 3.23. [E-book]. Available: https://www.circuitbread.com/textbooks/electromagnetics-i/transmission-lines/single-stub-matching.
     </li>
     
     <li>
-     C. Herrmann. Doe, "Hand-drawn Smith chart demonstrating single-stub tuning," Photograph of original diagram, EE574: RF/Microwave Engineering II, Dept. of Electrical Eng., Univ. at Buffalo, Buffalo, NY, USA, Nov. 13, 2026.
+     C. Herrmann. EE574. Class Lecture Notes, "Annotated Smith chart demonstrating single-stub tuning," Dept. of Electrical Eng., Univ. at Buffalo, Buffalo, NY, USA, Nov. 13, 2026.
     </li>
 
-
-    <!-- Website / Webpage Example -->
-    <li id="ref-3">
-      P. Bhandari. &ldquo;Nominal data | Definition, examples, data collection &amp; analysis.&rdquo; Scribbr. Accessed: Aug. 11, 2025. [Online]. Available: <a href="https://www.scribbr.com/statistics/nominal-data/">https://www.scribbr.com/statistics/nominal-data/</a>
     </li>
   </ol>
 

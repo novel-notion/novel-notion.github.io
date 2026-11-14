@@ -90,13 +90,11 @@ While the scale of electrical grids across the world is staggering and ever chan
  <ol class="ieee-references">
     <!-- Journal Article Example -->
     <li id="ref-1">
-	R. Adapa, "AC to DC line conversion," Class Lecture, presented by K. Burke, EE576: High-Voltage Engineering, Dept. of Electrical Eng., Univ. at Buffalo, Buffalo, NY, USA, Sept. 26, 2022.
+	R. Adapa. EE576. Class Lecture, Presented by K. Burke, Topic: "AC to DC line conversion." Dept. of Electrical Eng., SUNY Univ. at Buffalo, Buffalo, NY, Sept. 26, 2022.
     </li>
 
     <li id="ref-2">
-	C. Herrmann, "Particle accelerators and their H.V. implications," Class
-	Presentation, EE576: High-Voltage Engineering, Dept. of Electrical Eng.,
-	Univ. at Buffalo, Buffalo, NY, USA, December, 2022.
+	C. Herrmann. EE576. Class Presentation, Topic: "Particle accelerators and their H.V. implications." Dept. of Electrical Eng., SUNY Univ. at Buffalo, Buffalo, NY, December, 2022.
 	</li> 
   </ol>
 
