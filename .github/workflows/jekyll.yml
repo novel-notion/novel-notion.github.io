@@ -31,6 +31,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3.8'
+          bundler-cache: true # Automatically runs bundle install and caches gems
+      - run: ruby -v
+
+      ######
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Ruby
