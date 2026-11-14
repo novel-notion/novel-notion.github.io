@@ -269,42 +269,49 @@ practical. This experience has taught me that self-worth needs to be multi-facet
 		R. Hasani, M. Lechner, A. Amini, D. Rus, and R. Grosu, “Liquid Time-constant Networks”, AAAI, vol. 35, no. 9, pp. 7657–7666, May 2021.
     </li>
     <li id="ref-2">
-		J.C. Butcher, A history of Runge-Kutta methods, Applied Numerical Mathematics, Volume 20, Issue 3, 1996, Pages 247-260,ISSN 0168-9274, https://doi.org/10.1016/0168-9274(95)00108-5. (https://www.sciencedirect.com/science/article/pii/0168927495001085
-	</li>
+		J. Butcher, <cite>A history of Runge-Kutta methods, Applied Numerical Mathematics,</cite> Volume 20, Issue 3, 1996, Pages 247-260,ISSN 0168-9274, https://doi.org/10.1016/0168-9274(95)00108-5.</li>
     <li id="ref-3">
-		Scellier B and Bengio Y (2017) Equilibrium Propagation: Bridging the Gap between Energy-Based Models and Backpropagation. Front. Comput. Neurosci. 11:24. doi: 10.3389/fncom.2017.00024
+		B. Scellier, Y. Bengio, <cite>Equilibrium Propagation: Bridging the Gap between Energy-Based Models and Backpropagation.</cite> Front. Comput. Neurosci. 11:24. doi: 10.3389/fncom.2017.00024
     </li>
 
     <li id="ref-4">
-Hasani, R., Lechner, M., Amini, A. et al. Closed-form continuous-time neural networks. Nat Mach Intell 4, 992–1003 (2022). https://doi.org/10.1038/s42256-022-00556-7
+Hasani, R., Lechner, M., Amini, A. et al. <cite>Closed-form continuous-time neural networks.</cite> Nat Mach Intell 4, 992–1003 (2022). https://doi.org/10.1038/s42256-022-00556-7
     </li>
 
     <li id="ref-5">
-K.-I. Funahashi and Y. Nakamura, “Original Contribution: Approximation of dynamical systems by continuous time recurrent neural networks,” Neural Networks, vol. 6, pp. 801–806, 1993, [Online]. Available: https://api.semanticscholar.org/CorpusID:10352852
+K.-I. Funahashi and Y. Nakamura, “Approximation of dynamical systems by continuous time recurrent neural networks,” <cite>Neural Networks</cite>, ol. 6, pp. 801–806, 1993, [Online]. Available: https://api.semanticscholar.org/CorpusID:10352852
     </li>
 
     <li id="ref-6">
-		Chen, T. Q.; Rubanova, Y.; Bettencourt, J.; and Duvenaud, D. K. 2018. Neural ordinary differential equations. In Advances in Neural Information Processing Systems, 6571–6583.
+		T. Chen, Q.Rubanova, Y. Bettencourt, and D. Duvenaud, "Neural ordinary differential equations." <cite>Advances in Neural Information Processing Systems</cite>, 6571–6583.
 	</li>
 
     <li id="ref-7">
-Wikipedia contributors, "Ball-and-disk integrator," Wikipedia, The Free Encyclopedia. https://en.wikipedia.org/w/index.php?title=Ball-and-disk_integrator&oldid=1358358551 (accessed Nov. 14, 2026
+Wikipedia contributors, "Ball-and-disk integrator," <cite>Wikipedia</cite>,
+[online document], 2026.
+Available:https://en.wikipedia.org/w/index.php?title=Ball-and-disk_integrator&oldid=1358358551
+[accessed Nov. 13, 2026]
 	</li>
 
     <li id="ref-8">
-Veritasium. The Most Powerful Computers You've Never Heard Of. (Dec. 21, 2021). Accessed: Nov. 13, 2026. [Online Video]. Available: https://www.youtube.com/watch?v=IgF3OX8nT0w
+Veritasium. "The most powerful computers you've never heard of," [online video],
+Dec. 21, 2021. Available: https://www.youtube.com/watch?v=IgF3OX8nT0w [Accessed: Nov. 13, 2026].
 	</li>
 
     <li id="ref-9">
-A. Marsh, "Lord Kelvin and His Analog Computer," IEEE Spectrum, June 2, 2024. [Online]. Available: https://spectrum.ieee.org/tide-predictions (accessed: Nov. 13, 2026).
+A. Marsh, "Lord kelvin and his analog computer," <cite>IEEE Spectrum</cite>,
+June 2, 2024. [Online]. Available: https://spectrum.ieee.org/tide-predictions
+[accessed: Nov. 13, 2026].
 	</li>
 
     <li id="ref-10">
-YosysHQ, "yosys: Yosys Open SYnthesis Suite," GitHub. https://github.com/YosysHQ/yosys (accessed Nov. 13, 2026).
+YosysHQ, "yosys: Yosys Open SYnthesis Suite," GitHub.
+Available: https://github.com/YosysHQ/yosys [accessed Nov. 13, 2026].
 	</li>
 
     <li id="ref-11">
-YosysHQ, "apicula: Project Apicula: bitstream documentation for Gowin FPGAs," GitHub. https://github.com/YosysHQ/apicula (accessed Nov. 13, 2026).
+YosysHQ, "apicula: Project Apicula: bitstream documentation for Gowin FPGAs,"
+GitHub. Available: https://github.com/YosysHQ/apicula [accessed Nov. 13, 2026].
 	</li>
 
     <li id="ref-12">
