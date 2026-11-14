@@ -1,0 +1,97 @@
+---
+layout: page
+title: Reflection 2
+permalink: R2
+---
+<h3 style="text-decoration:underline">R2 - EE574: RF / Microwave Circuits II </h3>
+<div style="margin-top:-20px">
+    Black magic and insight
+</div>
+<br>
+In a way, Dr. Singisetti's EE574 (RF2) course felt like the second round of a boxing match. I had survived the first round with hardly a scratch (RF1), but it quickly became clear that the first round was just a warm up. In round two, Dr. Sinigsetti really started to show us why electrical engineers have deemed radio frequency engineering as "black magic." Topics of the class included vanishing spells, chakra alignment, and rune drawing. In other words, why and how we create RF circuits that contain 0 actual components, how to tune impedances to prevent reflections, and how to create and simulate a legitimate RF coupler. Overall,  Dr. Singisetti's class made me realize just how powerful and elegant the field of RF engineering really is, and is a great example of what happens when you balance theory with implementation. This class also made me reflect on why the heck I was even taking it in the first place, and my road to becoming an EE.
+
+I have always loved making things. When I was a kid, I asked my dad to bring home "grid paper" from work because I was cooking up some pretty ground breaking "inventions" that I needed to ink-up immediately. The sky was the limit. I wanted to be able to build anything and everything. When someone asked what I wanted to be when I grew up, I would tell them "an inventor." I eventually learned that wasn't really a job title, but that answer was a natural stepping stone into the world of engineering. Telling someone that you want to be an "engineer" doesn't narrow it down much, though. So how did I end up as an EE?  
+
+What discipline of engineering would allow me to build anything and everything I could imagine? There are a lot of "brand-name" engineering majors to choose from. In addition to electrical engineering I considered mechanical engineering, computer engineering, and aerospace engineering. All of these were strong contenders, but all of them, in my own (flawed) opinion, had at least one deal breaking weakness.
+
+In mechanical engineering, many of the core principles always felt pretty intuitive to me, stress, strain, sheer, torque, etc. You can see and feel the results of pretty much all the fundamental aspects of mechanical engineering. Arguably, this makes it relatively straightforward to build a mental model of the forces in whatever part or structure you might be designing. In mechanical engineering you have the luxury of being able to see how something breaks, pretty much immediately. Computer engineering would have put me in a digital box. The real world is messy and analog. Not to mention there is an absurd amount of overlap with electrical engineering if you find yourself hanging out with the right crowd. Why would I just study a sub-field of electrical engineering?  Aerospace engineering was definitely tempting. Rockets, airplanes, and satellites definitely rank highly on the "cool stuff" list, but all of the aerospace engineers I know just make system models and block diagrams in Simulink all day. So while aerospace engineers might know how to design cool stuff, I never run into them in the Hardware Development Lab.
+
+If the goal is to be able to make everything and anything, none of these majors make the cut. Why? Because in order to build something, you must be equipped to understand it. You must have the tools that allow you to break open the black-boxes within the system that you are trying to build. This is exactly what electrical engineering does. It gives you all the mathematical tools and concepts you need to be able to handle anything the other disciplines throw at you while still teaching you how to actually build something. Electrical engineering has one foot dangling over the edge of the cliff-of-theory (physic majors are waiting below) while still having one foot firmly planted in execution. Being able to break-open those black boxes: that is why I chose electrical engineering as a major. 
+
+This whole chain of thought was actually prompted by my time in Dr. Singisetti's class. I realized that yet again I was trying to break open more black-boxes. Just a few years previously I had found plans online for building a funky looking antenna to pull images directly from weather satellites. 
+
+<div style="display: flex; gap: 10px; justify-content: center;">
+  <div style="flex: 1;">
+    <img src="/assets/R2/quad_1.jpg" alt="Picture of a Quadrafilar Antenna" style="width: 100%; height: auto;" />
+  </div>
+  <div style="flex: 1;">
+    <img src="/assets/R2/quad_2.jpg" alt="Picture of a Quadrafilar Antenna" style="width: 100%; height: auto;" />
+  </div>
+</div>
+<figcaption style="text-align:center; margin-bottom: 50px ">
+    Fig. 1. Quadrifilar Helix Antenna Tuned to 137 MHz (photos by author)
+ </figcaption>
+
+
+
+I eventually got it working, but not without some trouble. The key to my success can be seen in the coil of wire wrapped around the center post of the antenna. Evidently that coil of wire was very important, because until I included it in the build, my antenna was just a lawn ornament. It wasn't until EE574 that I realized this had been my first brush with one of the most fundamental concepts not just in electrical engineering, but physics and engineering as a whole: impedance matching. 
+
+![Tropical Storm Alberto]({{"/assets/R2/alberto.jpg"}})
+<figcaption style="text-align:center; margin-bottom: 50px ">
+    Fig. 2. Tropical Storm Alberto, May 29 2018 {% include cite.html ref_num="1" %}
+</figcaption>
+
+Impedance is a concept that came up over and over again in my academic career. In EE574, the concept finally clicked for me on an intuitive level, and now I can't unsee it. Even now in my career as an electrical engineer I use the concept on a daily basis. I could be designing a PCB, debugging a circuit, or characterizing a system's bandwidth, and the idea of impedance comes up over and over again. This is one of those "black-box-breaking conceptual tools" that I mentioned before. While I know the concept of “impedance” is covered by other courses and majors, there is an exceptional amount of elegance when viewed through the lens of RF engineering. There are also some resulting silly, but practical, implications of the concept of impedance in the RF world. Which leads me to: the stub.
+
+The silliest of all things in the RF world to me is the concept of the stub. This is exactly what it sounds like, just a little stub of piece of copper coming off of what what looks like a normal circuit trace and terminating in a coaxial connector. Simple! When dealing with more pedestrian signals, pretty much anything that switches slower than about 50-100MHz, you wouldn’t even notice that little stub of copper hanging out there. However, as you creep up in frequency, eventually reaching the GHz range, that isn’t just a little piece of copper, that’s a component. 
+
+Depending on the frequency and the exact configuration of the copper on the board, this could be considered an inductor or a capacitor, and mathematically it will behave as such. Assuming that the trace is carrying a sinusoidal wave of a single frequency, the exact behavior of our stub will depend almost solely on it’s length. A popular way of prototyping these types of RF circuits is to lay down thin strips of copper tape on a fibreglass substrate. I’ve had a great deal of fun trimming the tape shorter and shorter with a razor blade and watching the behavior of my circuit change in real time on the glowing green display of the ancient HP vector network analyzer. 
+
+Frankly if I didn’t have a chance to see it with my own eyes, I might not believe that a stray line of metal on my circuit could literally make or break my entire circuit. It’s just silly!
+
+![RF Stub]({{"/assets/R2/stub.png"}})
+<figcaption style="text-align:center; margin-bottom: 50px ">
+    Fig. 3. An RF Stub. {% include cite.html ref_num='2' %} 
+</figcaption>
+
+Of course no discussion of RF engineering would be complete without the mention of one of the most intimidating graphics in all of electrical engineering. This chart is known to strike fear into even the most seasoned electron-wranglers. Just like any other skill to master, if you take it one step at a time it’s really not so bad. Plus, if you hang one in your cubicle, it will let the other EEs know that you don’t mess around. 
+
+![Smith Chart]({{"/assets/R2/smith_chart.png"}})
+<figcaption style="text-align:center; margin-bottom: 50px ">
+    Fig. 4. Stub Tuning with a Smith Chart {% include cite.html ref_num='3' %}
+</figcaption>
+
+
+
+
+
+After taking this class, and honestly really only talking about the basics here, I completely understand why RF engineering has earned its reputation for being "black magic." Using fancy shapes and exotic materials to harness invisible fields of energy and make it do my bidding? That sounds like magic by definition to me. Yet I have some interesting non-technical take-aways here too. The first and foremost is that not everything is always as it seems. While an RF circuit may look like just a bunch of useless squiggly lines, it requires a closer look and deeper thought to actually understand what's going on there. That can apply to almost anything in life. Situations, circumstances, people - they are rarely as simple as they might appear and most of the time require a closer look to really understand what's going on. 
+
+Another big take away for me is that in this line of work, it pays to connect the dots. In my current role, we never touch the types of circuits that Dr.Singesetti explained in this class. In fact, we dread the idea of having to deal with the RF spectrum because when we do, it's typically in the context of unwanted interference on communication lines and sensor signals. So while I may not be making 4-port RF couplers in my day to day job, the understanding I developed through the course of this class makes me a better and more effective engineer. Which I think is pretty neat.
+
+
+<div style="border-top: 1px solid black; text-align:left" class="footer">
+    References
+
+ <ol class="ieee-references">
+    <!-- Journal Article Example -->
+    <li id="ref-1">
+        C. Herrmann, "Direct LRPT weather satellite image received from Meteor-M N2, Tropical Storm Alberto" Unpublished raw data, received via RTL-SDR, Corning NY, USA, May 29, 2018.
+    </li>
+    
+    <li id="ref-2">
+        S. W. Ellingson, "Single-stub matching," in Electromagnetics, Vol. 1, Blacksburg, VA, USA: VT Publishing, 2018, ch. 3, sec. 3.23. [Online]. Available: https://www.circuitbread.com/textbooks/electromagnetics-i/transmission-lines/single-stub-matching (accessed Nov. 13, 2026).
+    </li>
+    
+    <li>
+     C. Herrmann. Doe, "Hand-drawn Smith chart demonstrating single-stub tuning," Photograph of original diagram, EE574: RF/Microwave Engineering II, Dept. of Electrical Eng., Univ. at Buffalo, Buffalo, NY, USA, Nov. 13, 2026.
+    </li>
+
+
+    <!-- Website / Webpage Example -->
+    <li id="ref-3">
+      P. Bhandari. &ldquo;Nominal data | Definition, examples, data collection &amp; analysis.&rdquo; Scribbr. Accessed: Aug. 11, 2025. [Online]. Available: <a href="https://www.scribbr.com/statistics/nominal-data/">https://www.scribbr.com/statistics/nominal-data/</a>
+    </li>
+  </ol>
+
+

@@ -1,0 +1,59 @@
+---
+layout: default
+---
+<article class="post" itemscope itemtype="https://schema.org/TechArticle">
+  <h1 itemprop="headline">{{ page.title }}</h1>
+
+  {% include post-meta.html %}
+
+  <div itemprop="articleBody">
+    {{ content }}
+  </div>
+
+  <hr>
+
+  {% assign related_posts = "" | split: "" %}
+  {% for candidate in site.posts %}
+    {% if candidate.url != page.url %}
+      {% for tag in page.tags %}
+        {% if candidate.tags contains tag %}
+          {% assign already_added = false %}
+          {% for r in related_posts %}
+            {% if r.url == candidate.url %}
+              {% assign already_added = true %}
+            {% endif %}
+          {% endfor %}
+          {% unless already_added %}
+            {% assign related_posts = related_posts | push: candidate %}
+          {% endunless %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+
+  {% if related_posts.size > 0 %}
+    {% assign shown = related_posts | slice: 0, 3 %}
+    <h2 class="heading">Related Articles</h2>
+    <hr>
+    {% include post-list.html posts=shown %}
+  {% elsif site.posts.size > 1 %}
+    {% assign others = site.posts | where_exp: "post", "post.url != page.url" | slice: 0, 3 %}
+    <h2 class="heading">More Articles</h2>
+    <hr>
+    {% include post-list.html posts=others %}
+  {% endif %}
+
+  <nav class="post-nav">
+    <div class="prev">
+      {% if page.previous %}
+        &larr; <a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }}</a>
+      {% endif %}
+    </div>
+    <div class="next">
+      {% if page.next %}
+        <a href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a> &rarr;
+      {% endif %}
+    </div>
+  </nav>
+</article>

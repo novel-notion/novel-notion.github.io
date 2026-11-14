@@ -1,0 +1,44 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=12.0, minimum-scale=1.0, user-scalable=yes">
+
+<link rel="preload" href="{{ '/assets/css/main.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}"></noscript>
+
+<link rel="preload" href="{{ '/assets/css/citations.css' | relative_url }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+
+{% if site.favicon %}
+  <link rel="icon" href="{{ site.favicon | relative_url }}">
+{% endif %}
+
+{% if site.apple_touch_icon %}
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ site.apple_touch_icon | relative_url }}">
+{% endif %}
+
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="{{ site.feed.path | default: '/rss.xml' | relative_url }}">
+
+{% seo %}
+
+{% if page.layout == 'post' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": {{ page.title | jsonify }},
+  "datePublished": "{{ page.date | date_to_xmlschema }}",
+  "dateModified": "{{ page.last_modified_at | default: page.date | date_to_xmlschema }}",
+  "author": {
+    "@type": "Person",
+    "name": {{ site.author.name | default: site.author | jsonify }},
+    "url": {{ site.url | jsonify }}
+  },
+  "description": {{ page.description | default: site.description | strip_html | jsonify }},
+  "url": "{{ site.url }}{{ page.url }}"
+  {% if page.image %}
+  ,"image": "{{ page.image | absolute_url }}"
+  {% endif %}
+  {% if page.tags and page.tags.size > 0 %}
+  ,"keywords": {{ page.tags | join: ", " | jsonify }}
+  {% endif %}
+}
+</script>
+{% endif %}

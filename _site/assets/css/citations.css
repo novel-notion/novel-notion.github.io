@@ -1,0 +1,38 @@
+
+  a.ieee-cite {
+    text-decoration: none;
+    color: #0056b3;
+  }
+  a.ieee-cite:hover {
+    text-decoration: underline;
+  }
+
+  /* IEEE Reference List styling using CSS Counters */
+  ol.ieee-references {
+    list-style-type: none;
+    counter-reset: ieee-counter;
+    padding-left: 0;
+  }
+
+  ol.ieee-references li {
+    counter-increment: ieee-counter;
+    position: relative;
+    padding-left: 2.5em; /* Creates the hanging indent */
+    margin-bottom: 0.75em;
+    line-height: 1.5;
+  }
+
+  /* Automatically inserts [1], [2], etc. on the left */
+  ol.ieee-references li::before {
+    content: "[" counter(ieee-counter) "]";
+    position: absolute;
+    left: 0;
+    width: 2em;
+    text-align: left;
+  }
+
+  /* Optional: Highlight target reference when clicked */
+  ol.ieee-references li:target {
+    background-color: #fff3cd;
+    transition: background-color 0.5s ease;
+  }

@@ -1,0 +1,313 @@
+---
+layout: page
+title: Reflection 4
+permalink: R4
+
+---
+<h3 style="text-decoration:underline">R4 - EE598: Ind. Problems / Thesis Research</h3>
+<div style="margin-top:-20px">
+    Failure and neural networks
+</div>
+<br>
+Individual problems with Dr. Fritz was definitely the most unique course that
+I took through my time in the UB graduate program. The original goal of the
+course was to supplement my future masters thesis based on a cutting edge topic:
+Liquid Time Constant neural networks (LTC-NN). In the end, I was never able to complete my thesis.  Reflecting on the experience is difficult. I was not able to accomplish my original goals. Nevertheless, I am making the conscious effort to still take what I can from this time, and reframe the experience in a more positive light. I may not have produced a thesis, but it was still incredibly rewarding to explore such an interesting topic at my own discretion. My time with Dr.Fritz was unique in that I was allowed to explore, try,and fail, on my own terms. At the end of EE598 (and my masters research), I am still happy to say that I have taken away a fundamental understanding of LTC neural networks and how they relate to dynamical systems, neural networks, and open-source FPGA tools. Not to mention, that I learned some important lessons about what it means to work as hard as you can and still "fail."
+
+To start with, let's talk about neural networks. I started EE598 and my masters
+research right on the cusp of what we now know would be a downward AI-spiral.
+Simpler times. The idea was to  take a critical look at the state of the art in
+neural networks and figure out if there was any use for them in
+high-performance, real-time control systems. We didn't need to look too hard.
+We quickly found a 2020 paper title Liquid Time-constant Networks {% include
+cite.html ref_num='1' %}.  At the time, the authors were trying to drum up some
+positive exposure via a TED talk and various interviews, so this paper quickly
+rose to the top of the search results. In these talks, they showed a demo of
+a toy car being driven by LTC-NN that consisted of only a handful of neurons. These neural networks are special because
+their behavior is defined by a system of continuous-time differential equations,
+instead of discrete non-linear activation functions. The same performance, the authors claim, would require an order of magnitude more neurons if using a more traditional neural network. 
+
+<details>
+
+<summary style="text-align:center; text-decoration:underline;cursor:pointer">That's very interesting, tell me more!</summary>
+
+<hr style="margin:25px 0px 25px 0px">
+<p>
+	Further, the authors claim that their biologically inspired neural network
+	scheme has a number of other advantages. For example, this network relies on
+	differential equations to describe its behavior. This means that it belongs to
+	a class of "continuous time" recurrent neural networks that can naturally and
+	elegantly handle input data sampled in real-time and/or at different rates.
+	Additionally, this type of network avoids the weakness of the other biologically
+	inspired neural network by avoiding abrupt, discontinuous, spikes as neuronal
+		outputs. The neurons in this type of network also have the ability to continuously adapt their responsiveness over time based on the inputs they receive, thus increasing their bandwidth (in a systems-engineering context).In other words, they have a liquid time constant. 
+</p>
+<p>
+Despite these grand advantages, nothing comes for free. The main disadvantage of
+this type of neural network is exactly what makes it so special: they rely on
+differential equations. Solving a differential equation is computationally
+expensive. When there is no closed form solution to said equation, a solver must
+be used to essentially integrate the equation and determine its value at the
+time of interest.  Mathematicians have been trying to come up with clever ways
+to speed up this process for hundreds of years now {% include cite.html
+ref_num='2' %}. Despite historical best efforts, even the best solvers will
+struggle to solve a system of differential equations that could potentially have
+hundreds or even thousands of independent terms, in anything close to resembling
+real time. This problem is exacerbated by the fact that the tuning/training of
+a neural network's parameters often requires an inordinate number of repeated evaluations of said network. 
+</p>
+<p>
+Of course, people far smarter than me have been thinking about these issues for
+a long time. They have come up with many clever ways to address both the issue
+of training time {% include cite.html ref_num='3' %} and evaluation time as
+a whole. In the case of Hasani et. al., they were able to find a closed form
+solution to the neuronal differential equations that approximates the behavior
+of an LTC-NN closely enough to be useful {% include cite.html ref_num='4' %}. In
+other words, they found a holy grail of their field. At the cost of some
+accuracy,  they can plug-and-chug a (relatively) simple system of equations
+while still getting most of the LTC behavioral goodness, no solver required.
+Lucky them. 
+</p>
+<p>
+Here, we start to get to the core of what could have been my eventual thesis. 
+</p>
+<p>
+The authors of the LTC-NN paper got lucky. A Liquid Time-Constant neural network
+belongs to a larger class of neural networks sometimes labeled as
+continuous-time recurrent neural networks (CT-RNNS){% include cite.html
+ref_num='5' %} or Neural Differential Equations (NDEs) {% include cite.html
+ref_num='6' %}. There are many other formulations for neural networks whose
+behavior is defined by a _different_ system of differential equations, each with
+their own strengths and weaknesses. It's more than likely that these
+formulations do NOT have a nice closed form approximation. If someone were to prove that they had derived the most expressive and capable neural differential equation possible, a real-time implementation may not be practical. So the prompt becomes: 
+</p>
+<p>
+_How can we solve arbitrary systems of differential equations, WITHOUT using
+a solver?_  My inspiration came from a surprising source: the mechanical
+differential analyzers i.e. mechanical calculators.
+</p>
+<p>
+Getting to the point, my academic contribution to this field would be to
+implement a Liquid Time Constant Neural Network (and by extension, any system of
+differential equations) within an FPGA. More explicitly, I would not be
+implementing _a solver_ in the FPGA. Instead, I would configure the fabric of the
+FPGA itself in such a way that its behavior could be described by the exact
+same differential equations that define a LTC-NN. The goal was to create
+a numerical *emulation* of the system, not a numerical *simulation* of the
+system. A mathematical stunt double, if you will.
+</p>
+<p>
+
+The difference is subtle, but fundamental. So how do mechanical calculators tie into this? 
+</p>
+<p>
+
+Consider what happens when you ask a computer to solve an arbitrary differential
+equation. We know that a numerical concept of a "solver" must be involved
+somehow (Newtons Method, Runge-Katta, etc.), but let's go one level deeper. All
+of those methods of integration (obviously) involve some amount of basic
+arithmetic operation: addition, subtraction, multiplication, division. On the
+hardware level, the computer see these operations as a long list of
+operations/instructions that must be executed. These instructions manifest as
+electrical signals that are fed into very small, very specialized, "machines"
+made of silicon, whose outputs are given a symbolic representation of
+a mathematical value. No where within these "machines" (general purpose digital logic circuits) is one able to derive a physical equation that describes the hypothetical differential equation being solved. These operations are purely symbolic; the computer is executing a numerical simulation of the differential equation, not the actual differential equation.
+</p>
+<p>
+
+On the other hand, consider a mechanical computer. More specifically, consider
+the Ball-and-disk integrator {% include cite.html ref_num='7' %} [https://en.wikipedia.org/wiki/Ball-and-disk_integrator]. This is a mechanism that essentially performs integration using purely mechanical
+means by rolling a ball on a spinning disk. This mechanism was ultimately the
+foundation of tide predicting machines {% include cite.html ref_num='8' %}. Later
+iterations of these machines were able to integrate Fourier series with over 20
+harmonic components to produce highly accurate tide-tables {% include cite.html
+ref_num='9' %}. What is interesting about this methodology is there really isn't
+any "computation" involved, at least not the contemporary meaning of the term.
+There are no numbers or circuits or adders. These machines are not computers
+performing a series of symbolic operations. Instead, they can be thought of as
+our _numerical stunt double_. They *systems*, whose dynamics and transfer functions happen to match the dynamics of the real, physical, Earth-Sun-Moon system that influence the level of the tide.
+</p>
+<p>
+
+My goal was to configure the FPGA in such a way that the physical dynamics of the circuitry within the FPGA
+would match the dynamics that define a Liquid Time Constant neural network. It
+may seem convoluted, but this methodology has real merit. FPGAs are small, low
+power, and excel at performing massive parallel operations in real time.
+Further, this methodology also enables other types of (unlucky) neural
+differential equations to be useful for high-performance, real-time, low-power applications, even if they do not have a closed form approximation.
+</p>
+
+<hr style="margin:25px 0px 25px 0px">
+
+</details>
+<br>
+There are plenty of details and wrinkles that I am glossing over. But in my
+opinion this research topic has some serious potential.  of this research topic. Admittedly, I had grand thoughts of extending this work
+a into a doctoral degree. Yet despite my ambition, and the merit of the topic, I was never able to complete the research that I started in EE598. After four years of trying my hardest, I gave up.
+
+As I mentioned, reflecting on this experience is somewhat unpleasant. I have
+absorbed the externally given labels of "passionate" and "strong performer" into
+my identity and self-perception.  The notion that I essentially wasted the last
+four years of my life pursuing a topic I could not bring to fruition is
+sickening. Conceptually, I understood exactly what I needed to do, and knew how
+to do it. Despite the strong start in EE598, the execution and final product are
+where I fell short. I have never been the best at math, the smartest person in
+the room, or the quickest thinker. For the most part, I've always been able to make up
+my deficiencies in raw intellectual horsepower with determination and
+self-motivation. I don't give up easily. I've managed to find my own unique
+problem-solving niche by persevering where others would have given up because it
+was "too hard." Yet, this was a situation where my usual tactic of "stick it out" just couldn't work. However, time is only wasted if you don't learn anything. So with monumental effort, I am choosing to take what I can from this experience whose genesis lies in EE598 with Dr. Fritz.
+
+First of all, the sunk cost fallacy is real, and hits hard. Reflecting on the
+my last few semesters specifically, I had a high degree of agency. I almost
+always had a choice in the direction of my graduate degree. I could have
+narrowed the scope of my research, lowered the bar I had set for myself, or
+switched to a course-only option. But in the moment, it always felt like I had
+come too far to give up. Every semester I was slowly, but steadily, marching
+towards my goal. I was making progress. Every semester felt like it would be the
+last one, so why give up now? I didn't want to throw away all of the time and
+effort I had dedicated. But in retrospect, the opportunity cost of this slow
+march is almost appalling, and it only got worse as each semester passed.
+I spent countless nights, weekends, and holidays spent wading through FPGA
+toolchains, research papers, and esoteric math notation. Not to mention
+I attempted this self directed, original research while also putting in long
+hours at a mentally demanding job. So instead of entertaining even the smallest
+amount of capitulation, I spent years trying and failing to balance work,
+school, and my personal life. Meanwhile, I could have been working on personally enriching passion projects, maintaining my personal health, and connecting with the people that I care about. To overcome this sunk-cost mindset, I learned that sometimes I need to think about what I'm *not* doing, instead of focusing on what I need to do next.
+
+
+<details>
+<summary style="text-decoration:underline;cursor:pointer;text-align:center"> I've also realized that very rarely do I have to
+work through these types of problems alone.</summary> 
+
+<hr style="margin:25px 0px 25px 0px">
+
+After I finished EE598, I started my thesis research in earnest, with Dr.Fritz agreeing to act as my advisor. I consider Dr. Fritz to be a personal friend and an invaluable colleague. I have had the pleasure of working with him on a daily basis for the last five years in a professional capacity and he has facilitated much of my personal success since moving to Buffalo. 
+
+<hr style="margin:25px 0px 25px 0px">
+
+</details>
+<br>
+
+In retrospect, I was still able to take away some legitimate technical knowledge
+from EE598 and the resulting thesis research. Despite only being partially
+implement a LTC-NN on an FPGA, I _was_ able to fully implement a simpler,
+continuous-time neural network described in a paper by Funahashi et. al {%
+include cite.html ref_num='5' %}. The result was essentially an FPGA-based
+"accelerator" for running CT-RNNs. First I would configure the FPGA as our numerical
+"stunt double" according to the methodology above, essentially assuming the
+structure of the neural network in question. Then a Python script would load in a buffer of weights
+and input values. On my mark, the inputs would then be fed into the neural
+network structure for processing, before coming out the other side to be
+ingested again by the Python script running on my laptop. 
+
+The execution time of was over an order of magnitude faster when using the
+FPGA-based accelerator versus running it on my laptop. The true improvement in
+execution speed was likely closer to two or three orders of magnitude, with much
+of the inference time being dominated by the relatively slow serial link used to
+communicate between the PC and the FPGA. I consider this a win when it comes to
+my goal of "real time execution." 
+
+I buried the lead quite deeply, but another goal in this research was to
+essentially lower the barrier to entry for performing research in this field.
+(Remember our hypothetical mathematician with the perfect neural network?)
+
+A personal peeve of mine is the high-cost of educational FPGA equipment and the
+restrictive software licenses that vendors force their users to compile with.
+For this reason, I implemented this work using exclusively free and open-source
+FPGA tools as well as affordable hardware. I targeted the Tang Nano 20k
+development board, which is a GOWIN-based FPGA board that can be had for as
+little as $30 dollars from multiple online market places {% include cite.html
+ref_num="11" %}. I coupled this with Yosys{% include cite.html ref_num='12' %},
+NextPNR{% include cite.html ref_num='13' %}, and GHDL{% include cite.html
+ref_num='14' %} to provide a complete FPGA toolchain at zero cost, no strings
+attached. There are members of the FPGA community who believe that these tools
+will never be anything more than toys. With my work, I prove that this is not
+the case: another win.
+
+So now the conclusion: a nicely packaged take-home message. How do you conclude something that will forever remain unfinished? You take what you can.
+
+Hopefully it's clear that I had some major technical take-aways from this
+experience ranging from the practical to the theoretical. I was able to take
+a cross-disciplinary dive into control systems, digital design, and cutting-edge
+artificial neural networks. I was able to develop a better fundamental
+understanding of FPGAs and the workflows that enable them. I truly believe that
+this experience has augmented my skills as an engineer in a professional
+capacity and academic capacity. 
+
+The non-technical take-aways are even more important: the sunk-cost fallacy is
+very much a real thing.
+
+Logically, I know that there is always a certain point at which the work
+remaining out weighs the outcome of the work. But it's clear now that I need to
+have a more proactive thought process when it comes to large projects like this.
+The key here for me is to consider the opportunity cost of the work, and not
+just the work right in front of me.  In other words, what am I sacrificing, and is it worth it? Determining the cost of something also requires a calibration of personal values. 
+
+
+Up until now, my personal values and self-worth have been largely based on
+output. I feel the most confident when I am accomplishing hard or novel tasks.
+When my productivity and abilities are acknowledged, that brings me personal
+satisfaction and fulfillment. But that one dimensional source of self-worth is
+unsustainable. Sometimes, my usual _modus operandi_ of "just work harder" is not
+practical. This experience has taught me that self-worth needs to be multi-faceted. There is more to life than the papers you publish and the code that you write. 
+
+
+
+![CTRNN Cosimulation Errors]({{"/assets/R4/cosim_err.png"}})
+<figcaption style="text-align:center; margin-bottom: 50px ">
+    Fig. 1. Relative Errors Comparison of 2-Node CT-RNN (photo by author)
+</figcaption>
+
+
+
+<div style="border-top: 1px solid black; text-align:left" class="footer">
+    References
+
+ <ol class="ieee-references">
+    <li id="ref-1">
+		R. Hasani, M. Lechner, A. Amini, D. Rus, and R. Grosu, “Liquid Time-constant Networks”, AAAI, vol. 35, no. 9, pp. 7657–7666, May 2021.
+    </li>
+    <li id="ref-2">
+		J.C. Butcher, A history of Runge-Kutta methods, Applied Numerical Mathematics, Volume 20, Issue 3, 1996, Pages 247-260,ISSN 0168-9274, https://doi.org/10.1016/0168-9274(95)00108-5. (https://www.sciencedirect.com/science/article/pii/0168927495001085
+	</li>
+    <li id="ref-3">
+		Scellier B and Bengio Y (2017) Equilibrium Propagation: Bridging the Gap between Energy-Based Models and Backpropagation. Front. Comput. Neurosci. 11:24. doi: 10.3389/fncom.2017.00024
+    </li>
+
+    <li id="ref-4">
+Hasani, R., Lechner, M., Amini, A. et al. Closed-form continuous-time neural networks. Nat Mach Intell 4, 992–1003 (2022). https://doi.org/10.1038/s42256-022-00556-7
+    </li>
+
+    <li id="ref-5">
+K.-I. Funahashi and Y. Nakamura, “Original Contribution: Approximation of dynamical systems by continuous time recurrent neural networks,” Neural Networks, vol. 6, pp. 801–806, 1993, [Online]. Available: https://api.semanticscholar.org/CorpusID:10352852
+    </li>
+
+    <li id="ref-6">
+		Chen, T. Q.; Rubanova, Y.; Bettencourt, J.; and Duvenaud, D. K. 2018. Neural ordinary differential equations. In Advances in Neural Information Processing Systems, 6571–6583.
+	</li>
+
+    <li id="ref-7">
+Wikipedia contributors, "Ball-and-disk integrator," Wikipedia, The Free Encyclopedia. https://en.wikipedia.org/w/index.php?title=Ball-and-disk_integrator&oldid=1358358551 (accessed Nov. 14, 2026
+	</li>
+
+    <li id="ref-8">
+Veritasium. The Most Powerful Computers You've Never Heard Of. (Dec. 21, 2021). Accessed: Nov. 13, 2026. [Online Video]. Available: https://www.youtube.com/watch?v=IgF3OX8nT0w
+	</li>
+
+    <li id="ref-9">
+A. Marsh, "Lord Kelvin and His Analog Computer," IEEE Spectrum, June 2, 2024. [Online]. Available: https://spectrum.ieee.org/tide-predictions (accessed: Nov. 13, 2026).
+	</li>
+
+    <li id="ref-10">
+YosysHQ, "yosys: Yosys Open SYnthesis Suite," GitHub. https://github.com/YosysHQ/yosys (accessed Nov. 13, 2026).
+	</li>
+
+    <li id="ref-11">
+YosysHQ, "apicula: Project Apicula: bitstream documentation for Gowin FPGAs," GitHub. https://github.com/YosysHQ/apicula (accessed Nov. 13, 2026).
+	</li>
+
+    <li id="ref-12">
+T. Gingold and GHDL Contributors, "GHDL: An open-source simulator and compiler for the VHDL language." [Online]. Available: https://github.com/ghdl/ghdl
+	</li>
+  </ol>

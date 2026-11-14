@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<h1 class="heading">Archive</h1>
+<hr>
+
+{% assign grouped = site.posts | group_by_exp: 'post', 'post.date | date: "%Y"' %}
+{% assign grouped = grouped | sort: 'name' | reverse %}
+{% for year in grouped %}
+  <h2 class="heading">{{ year.name }}</h2>
+  <hr>
+  {% assign posts_sorted = year.items | sort: "date" | reverse %}
+  {% include post-list.html posts=posts_sorted %}
+{% endfor %}
